@@ -156,7 +156,7 @@ module Agents
             last_status = JSON.parse(last_status)
             payload['result']['closed'].each do | k, v |
               found = false
-              last_status.each do | kbis, vbis|
+              last_status['closed'].each do | kbis, vbis|
                 if k == kbis
                   found = true
                 end
@@ -169,12 +169,12 @@ module Agents
               end
             end
           end
-          memory['last_status'] = payload['result']['closed'].to_s
+          memory['last_status'] = payload['result'].to_s
         end
       else
-        create_event payload: payload['result']['closed']
+        create_event payload: payload['result']
         if payload.to_s != memory['last_status']
-          memory['last_status'] = payload['result']['closed'].to_s
+          memory['last_status'] = payload['result'].to_s
         end
       end
     end
